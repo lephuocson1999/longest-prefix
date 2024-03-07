@@ -42,9 +42,13 @@ func SetLongestPrefix(prefix string, longestPrefixMap map[string]int) {
 		}
 
 		// Get index of v in longest prefix
-		lastIndex := strings.LastIndex(longestPrefix, v)
+		// Example: prefix = "abc" and v = "a"
+		// 			lastIndex = 0
+		lastIndex := strings.LastIndex(prefix, string(v))
 
-		// Only get value from index + 1 of lastIndex
+		// Only get value from lastIndex + 1
+		// Example: prefix = "abc" and v = "a"
+		// 			new prefix = "bca"
 		longestPrefix = longestPrefix[lastIndex+1:] + v
 		longestPrefixMap[longestPrefix]++
 	}

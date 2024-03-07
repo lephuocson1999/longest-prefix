@@ -51,9 +51,13 @@ func BuildPrefix(prefix, v string) string {
 		prefix += string(v)
 	} else {
 		// Get index of v in longest prefix
+		// Example: prefix = "abc" and v = "a"
+		// 			lastIndex = 0
 		lastIndex := strings.LastIndex(prefix, string(v))
 
 		// Only get value from lastIndex + 1
+		// Example: prefix = "abc" and v = "a"
+		// 			new prefix = "bca"
 		prefix = prefix[lastIndex+1:] + string(v)
 	}
 
