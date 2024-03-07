@@ -2,8 +2,6 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"time"
 )
 
 // Đề bài:
@@ -18,11 +16,7 @@ import (
 // A = [ "abcbac", "abf", "abcdef" ] → Output = "ab"
 
 func main() {
-	// A := []string{"abc", "abf", "abcdef"}
-	A := []string{"abc", "cde", "gh"}
-
-	start := time.Now()
-	fmt.Println(GetLongestPrefixV2(A))
-	elapsed := time.Since(start)
-	log.Printf("Took %s", elapsed)
+	A := []string{"abc", "abf", "abcdef"}
+	// A := []string{"abc", "cde", "gh"}
+	fmt.Println(GetLongestPrefixV1(A))
 }
