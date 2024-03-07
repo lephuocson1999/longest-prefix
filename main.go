@@ -16,7 +16,7 @@ import (
 // A = [ "abcbac", "abf", "abcdef" ] → Output = "ab"
 
 func main() {
-	A := []string{"abc", "abf", "abcdef"}
-	// A := []string{"abc", "cde", "gh"}
+	// A := []string{"abc", "abf", "abcdef"}
+	A := []string{"abc", "cde", "gh"}
 	fmt.Println(GetLongestPrefixV1(A))
 }

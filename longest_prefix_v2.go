@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -13,34 +12,68 @@ func GetLongestPrefixV2(input []string) string {
 		return input[0]
 	}
 
-	firstValue := input[0]
-	result := ""
+	// Build longest prefix map
+	longestPrefixMap := BuildLongestPrefixMap(input[0], input)
 
+	return BuildLongestPrefix(longestPrefixMap, len(input))
+}
+
+func BuildLongestPrefixMap(firstValue string, input []string) map[string]int {
+	var prefix string
+	longestPrefixMap := make(map[string]int)
 	for _, v := range firstValue {
-		if result == "" {
-			result += string(v)
-			continue
-		}
+		prefix = BuildPrefix(prefix, string(v))
 
-		fmt.Println("value: ", string(v))
+		// Assign 1 to this prefix because it is in first index
+		longestPrefixMap[prefix] = 1
+
 		for j := 1; j < len(input); j++ {
-			// If contains, break out of loop to result += v
-			if strings.Contains(input[j], result) || result == "" {
-				continue
+			// If len > len of different input -> return
+			if len(prefix) > len(input[j]) {
+				return longestPrefixMap
 			}
 
-			// Get index of v in longest prefix
-			lastIndex := strings.LastIndex(result, string(v))
-			fmt.Println("lastIndex", lastIndex)
+			// If !contains, break the loop
+			if !strings.Contains(input[j], prefix) {
+				break
+			}
 
-			// Only get value from index + 1 of lastIndex
-			result = result[lastIndex+1:] + string(v)
-			fmt.Println("result 2================================================================", result)
+			longestPrefixMap[prefix]++
 		}
-
-		fmt.Println("result================================================================: ", result, string(v))
-		result += string(v)
 	}
 
-	return result
+	return longestPrefixMap
+}
+
+func BuildPrefix(prefix, v string) string {
+	// Is prefix contain character
+	if !strings.Contains(prefix, string(v)) {
+		prefix += string(v)
+	} else {
+		// Get index of v in longest prefix
+		lastIndex := strings.LastIndex(prefix, string(v))
+
+		// Only get value from lastIndex + 1
+		prefix = prefix[lastIndex+1:] + string(v)
+	}
+
+	return prefix
+}
+
+func BuildLongestPrefix(longestPrefixMap map[string]int, lengthInput int) string {
+	var (
+		key string
+	)
+	for k, v := range longestPrefixMap {
+		// If value of key == length of input -> key is valid
+		if v == lengthInput && len(k) > len(key) {
+			key = k
+		}
+	}
+
+	if key == "" {
+		return "Không có chuỗi nào"
+	}
+
+	return key
 }
