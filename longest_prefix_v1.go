@@ -1,68 +1,30 @@
 package main
 
-import (
-	"strings"
-)
-
 func GetLongestPrefixV1(input []string) string {
-	longestPrefixMap := make(map[string]int)
-	for _, v := range input {
-		SetLongestPrefix(v, longestPrefixMap)
+	if len(input) == 0 {
+		return ""
+	}
+	// return if len của input == 1
+	if len(input) == 1 {
+		return input[0]
 	}
 
-	var (
-		key string
-	)
-	for k, v := range longestPrefixMap {
-		if v == len(input) && len(k) > len(key) {
-			key = k
+	firstInput := input[0]
+
+	// For các ký tự của chuỗi đầu tiên
+	for i, character := range firstInput {
+		for j := 1; j < len(input); j++ {
+			// Nếu i > length của các chuỗi tiếp theo -> chuỗi đầu tiên dài hơn chuỗi còn lại -> return ra số ký tự trùng
+			// Nếu kí tự ở index i của các chuỗi tiếp theo != character -> chuỗi prefix trùng nhau kết thúc -> return ra số ký tự trùng
+			if i >= len(input[j]) || string(input[j][i]) != string(character) {
+				if input[0][:i] == "" {
+					return "Không có chuỗi nào"
+				}
+
+				return input[0][:i]
+			}
 		}
 	}
 
-	if key == "" {
-		return "Không có chuỗi nào"
-	}
-
-	return key
-}
-
-func SetLongestPrefix(prefix string, longestPrefixMap map[string]int) {
-	// Split characters
-	splitPrefix := strings.Split(prefix, "")
-
-	var (
-		longestPrefix string
-	)
-	for _, v := range splitPrefix {
-		// If longest prefix don't contains, add to longest prefix variable
-		if !strings.Contains(longestPrefix, v) {
-			longestPrefix += v
-			longestPrefixMap[longestPrefix]++
-			continue
-		}
-
-		// If longest prefix == characters, continue other characters
-		if longestPrefix == v {
-			continue
-		}
-
-		longestPrefix = RebuildLongestPrefixCharacter(prefix, v, longestPrefix)
-		longestPrefixMap[longestPrefix]++
-	}
-}
-
-func RebuildLongestPrefixCharacter(
-	prefix, character, longestPrefix string,
-) string {
-	// Get index of v in longest prefix
-	// Example: prefix = "abc" and v = "a"
-	// 			lastIndex = 0
-	lastIndex := strings.LastIndex(longestPrefix, character)
-
-	// Only get value from lastIndex + 1
-	// Example: prefix = "abc" and v = "a"
-	// 			new prefix = "bca"
-	longestPrefix = longestPrefix[lastIndex+1:] + character
-
-	return longestPrefix
+	return "Không có chuỗi nào"
 }

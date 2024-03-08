@@ -12,11 +12,11 @@ import (
 // Ví dụ:
 // A = [ "abc", "abf", "abcdef" ] → Output = "ab"
 // A = [ "abc", "cde", "gh" ] → Output = Không có chuỗi nào
-
-// A := []string{"aaaccccc", "aaaaaddd", "aaaagggg"}
-// A := []string{"abbcddaba", "aaaadbcdbbbb", "bbbbbcdbbbb"}
+// A := []string{"aaaccccc", "aaaaaddd", "aaaagggg"} → Output = "aa"
 
 func main() {
 	A := []string{"aaaccccc", "aaaaaddd", "aaaagggg"}
+	// A := []string{"abc", "abf", "abcdef"}
+	// A := []string{"abc", "cde", "gh"}
 	fmt.Println(GetLongestPrefixV1(A))
 }
